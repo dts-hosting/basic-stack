@@ -4,7 +4,7 @@ Creates a minimal stack of resources in AWS for development / testing.
 
 - VPC and related resources (subnets, route tables etc.)
   - default ("10.0.0.0/16")
-  - Public subnets only
+  - single public subnet only
 - Security groups
   - SSH is allowed by default ("0.0.0.0/0")
 - EC2 instances
@@ -69,6 +69,16 @@ In the `deploy` folder create `basic-stack1.yml` with contents:
 name: Basic stack 1
 # [unique] name and / or prefix for created resources
 resource_prefix: basic-stack1
+# list of ec2 instances to create
+instances:
+  - ami_distro: "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"
+    ami_owner: "099720109477"
+    name: runner
+    type: t4g.nano
+    root_volume_size: 50
+    user_data: >
+      #!/bin/bash
+      sudo apt-get update && sudo apt-get -y install curl
 ```
 
 ## Creating resources
@@ -98,9 +108,15 @@ to treat them as a pair and to always use the same backend and config
 together. To that end it is preferable (though not required) to use
 matching filenames as in the examples.**
 
-## SSH keys for EC2 instances
+## Outputs
 
-TODO
+```bash
+terraform output # all except "sensitive" values
+terraform output ssh_private_key # display the private key
+
+# or, if you're using AWS profiles to handle multiple accounts
+AWS_PROFILE=$profile terraform output
+```
 
 ## Multiple stacks
 

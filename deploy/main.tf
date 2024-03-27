@@ -11,9 +11,10 @@ locals {
   config              = yamldecode(local.config_file_content)
 
   # extract values from config
+  instances       = local.config.instances
   name            = local.config.name
   resource_prefix = local.config.resource_prefix
-  ssh_allowlist   = try(local.config.ssh_allowlist, "0.0.0.0/0")
+  ssh_allowlist   = try(local.config.ssh_allowlist, ["0.0.0.0/0"])
   vpc_cidr_block  = try(local.config.vpc_cidr_block, "10.0.0.0/16")
 }
 
@@ -28,8 +29,30 @@ provider "aws" {
 module "basic-stack" {
   source = "../modules/basic-stack"
 
+  instances       = local.instances
   name            = local.name
   resource_prefix = local.resource_prefix
   ssh_allowlist   = local.ssh_allowlist
   vpc_cidr_block  = local.vpc_cidr_block
+}
+
+output "security_group_id" {
+  value = module.basic-stack.security_group_id
+}
+
+output "ssh_private_key" {
+  value     = module.basic-stack.ssh_private_key
+  sensitive = true
+}
+
+output "ssh_public_key" {
+  value = module.basic-stack.ssh_public_key
+}
+
+output "subnet_id" {
+  value = module.basic-stack.subnet_id
+}
+
+output "vpc_id" {
+  value = module.basic-stack.vpc_id
 }
