@@ -29,6 +29,10 @@ data "aws_ami" "selected" {
   owners = [each.value.ami_owner]
 }
 
+output "dns_names" {
+  value = { for i in local.instances : i.name => module.instance[i.name].public_dns }
+}
+
 output "security_group_id" {
   value = module.security.security_group_id
 }

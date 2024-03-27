@@ -118,6 +118,36 @@ terraform output ssh_private_key # display the private key
 AWS_PROFILE=$profile terraform output
 ```
 
+The values are displayed for:
+
+- dns_names
+- security_group_id
+- ssh_private_key
+- ssh_public_key
+- subnet_id
+- vpc_id
+
+## Destroying resources
+
+You can selectively destroy resources by removing them from the config:
+
+```yml
+name: Basic stack 1
+resource_prefix: basic-stack1
+instances: [] # removed all instances
+```
+
+Running Terraform will now destroy any ec2s that were previously created.
+
+To destroy everything:
+
+```bash
+terraform destroy
+
+# or, if you're using AWS profiles to handle multiple accounts
+AWS_PROFILE=$profile terraform destroy
+```
+
 ## Multiple stacks
 
 To create multiple stacks you simply need another pair of configuration

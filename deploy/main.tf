@@ -36,6 +36,10 @@ module "basic-stack" {
   vpc_cidr_block  = local.vpc_cidr_block
 }
 
+output "dns_names" {
+  value = module.basic-stack.dns_names
+}
+
 output "security_group_id" {
   value = module.basic-stack.security_group_id
 }
