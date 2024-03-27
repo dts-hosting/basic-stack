@@ -1,0 +1,14 @@
+#!/bin/bash
+# ./bootstrap basic-stack us-west-2
+
+BUCKET=${1}
+REGION=${2:-us-west-2}
+
+aws s3api create-bucket \
+  --bucket "${BUCKET}" \
+  --create-bucket-configuration LocationConstraint="${REGION}" \
+  --region ${REGION} \
+
+aws s3api put-bucket-versioning \
+  --bucket "${BUCKET}" \
+  --versioning-configuration Status=Enabled
