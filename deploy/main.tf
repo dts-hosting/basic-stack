@@ -40,6 +40,10 @@ output "dns_names" {
   value = module.basic-stack.dns_names
 }
 
+output "public_ips" {
+  value = module.basic-stack.public_ips
+}
+
 output "security_group_id" {
   value = module.basic-stack.security_group_id
 }

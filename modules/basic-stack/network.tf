@@ -1,9 +1,10 @@
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name                 = local.resource_prefix
-  cidr                 = local.vpc_cidr_block
-  enable_dns_hostnames = true
+  name                    = local.resource_prefix
+  cidr                    = local.vpc_cidr_block
+  enable_dns_hostnames    = true
+  map_public_ip_on_launch = true
 
   # disable creation of "default" resources
   create_database_subnet_group  = false
