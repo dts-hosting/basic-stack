@@ -72,10 +72,10 @@ resource_prefix: basic-stack1
 # list of ec2 instances to create
 instances:
   - ami_distro: "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"
-    ami_owner: "099720109477"
+    ami_owner: "099720109477" # id (example: "canonical") or valid name (example: "amazon")
     name: runner
-    type: t4g.nano
-    root_volume_size: 50
+    type: t3.medium
+    root_volume_size: 10
     user_data: >
       #!/bin/bash
       sudo apt-get update && sudo apt-get -y install curl
