@@ -33,6 +33,10 @@ output "dns_names" {
   value = { for i in local.instances : i.name => module.instance[i.name].public_dns }
 }
 
+output "public_ips" {
+  value = { for i in local.instances : i.name => module.instance[i.name].public_ip }
+}
+
 output "security_group_id" {
   value = module.security.security_group_id
 }
